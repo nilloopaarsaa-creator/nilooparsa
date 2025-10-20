@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import TaskItem from './TaskItem';
 import SortControls from './SortControls';
 

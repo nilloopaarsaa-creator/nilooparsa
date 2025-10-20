@@ -1,5 +1,4 @@
 import React from 'react';
-// Fix: Removed .js extension from import to allow proper TypeScript module resolution.
 import { TrashIcon } from './icons';
 
 const QuadrantButton = ({ onClick, children, title, className }) => (

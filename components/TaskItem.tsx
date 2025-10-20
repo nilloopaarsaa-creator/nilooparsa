@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import { QuadrantType } from '../types';
 import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, TrashIcon } from './icons';
 

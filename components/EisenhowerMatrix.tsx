@@ -1,5 +1,4 @@
 import React from 'react';
-// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import Quadrant from './Quadrant';
 import { QuadrantType } from '../types';
 

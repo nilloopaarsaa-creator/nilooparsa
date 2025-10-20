@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { QuadrantType } from './types';
 import Header from './components/Header';
