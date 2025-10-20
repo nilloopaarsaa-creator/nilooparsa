@@ -1,6 +1,6 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// Fix: Removed .js extension from import to allow proper TypeScript module resolution.
 import App from './App';
 
 const rootElement = document.getElementById('root');

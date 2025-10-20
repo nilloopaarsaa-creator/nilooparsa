@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import { Task } from '../types';
+// Fix: Removed .js extension from import to allow proper TypeScript module resolution.
 import InboxTaskItem from './InboxTaskItem';
 
-interface TaskInboxProps {
-  tasks: Task[];
-  onAddTask: (text: string) => void;
-  onDelete: (id: string) => void;
-  onCategorize: (id: string, isImportant: boolean, isUrgent: boolean) => void;
-}
-
-const TaskInbox: React.FC<TaskInboxProps> = ({ tasks, onAddTask, onDelete, onCategorize }) => {
+const TaskInbox = ({ tasks, onAddTask, onDelete, onCategorize }) => {
   const [text, setText] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
       onAddTask(text.trim());

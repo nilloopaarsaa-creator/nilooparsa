@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
+// Fix: Removed .js extension from import to allow proper TypeScript module resolution.
 import { PlayIcon, PauseIcon, ResetIcon } from './icons';
 
 const WORK_MINUTES = 25 * 60;
 const BREAK_MINUTES = 5 * 60;
 
 const playBeep = () => {
+  // Fix: Cast window to `any` to allow access to vendor-prefixed webkitAudioContext for broader browser compatibility.
   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   if (!audioContext) return;
   const oscillator = audioContext.createOscillator();
@@ -22,11 +24,11 @@ const playBeep = () => {
 };
 
 
-const PomodoroTimer: React.FC = () => {
-  const [mode, setMode] = useState<'work' | 'break'>('work');
+const PomodoroTimer = () => {
+  const [mode, setMode] = useState('work');
   const [time, setTime] = useState(WORK_MINUTES);
   const [isActive, setIsActive] = useState(false);
-  const intervalRef = React.useRef<number | null>(null);
+  const intervalRef = React.useRef(null);
 
   const switchMode = useCallback(() => {
     playBeep();
@@ -46,7 +48,7 @@ const PomodoroTimer: React.FC = () => {
       intervalRef.current = window.setInterval(() => {
         setTime(prevTime => {
           if (prevTime <= 1) {
-            clearInterval(intervalRef.current!);
+            clearInterval(intervalRef.current);
             switchMode();
             return 0;
           }
@@ -54,9 +56,9 @@ const PomodoroTimer: React.FC = () => {
         });
       }, 1000);
     } else {
-      clearInterval(intervalRef.current!);
+      clearInterval(intervalRef.current);
     }
-    return () => clearInterval(intervalRef.current!);
+    return () => clearInterval(intervalRef.current);
   }, [isActive, switchMode]);
 
   const toggleTimer = () => setIsActive(!isActive);
@@ -66,7 +68,7 @@ const PomodoroTimer: React.FC = () => {
     setTime(mode === 'work' ? WORK_MINUTES : BREAK_MINUTES);
   };
 
-  const formatTime = (seconds: number) => {
+  const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
     const secs = (seconds % 60).toString().padStart(2, '0');
     return `${mins}:${secs}`;

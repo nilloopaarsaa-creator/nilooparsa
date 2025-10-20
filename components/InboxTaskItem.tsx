@@ -1,15 +1,8 @@
 import React from 'react';
-import { Task } from '../types';
+// Fix: Removed .js extension from import to allow proper TypeScript module resolution.
 import { TrashIcon } from './icons';
 
-interface InboxTaskItemProps {
-  task: Task;
-  onDelete: (id: string) => void;
-  onCategorize: (id: string, isImportant: boolean, isUrgent: boolean) => void;
-}
-
-const QuadrantButton: React.FC<{ onClick: () => void, children: React.ReactNode, title: string, className?: string }> = 
-  ({ onClick, children, title, className }) => (
+const QuadrantButton = ({ onClick, children, title, className }) => (
     <button
       onClick={onClick}
       title={title}
@@ -19,7 +12,7 @@ const QuadrantButton: React.FC<{ onClick: () => void, children: React.ReactNode,
     </button>
 );
 
-const InboxTaskItem: React.FC<InboxTaskItemProps> = ({ task, onDelete, onCategorize }) => {
+const InboxTaskItem = ({ task, onDelete, onCategorize }) => {
   return (
     <div className="flex items-center justify-between bg-slate-800 p-2 rounded-md hover:bg-slate-700 transition-colors">
       <span className="text-slate-200 flex-grow truncate">{task.text}</span>

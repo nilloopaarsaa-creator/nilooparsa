@@ -1,34 +1,35 @@
 import React, { useState, useMemo } from 'react';
+// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { Task, QuadrantType } from './types';
+import { QuadrantType } from './types';
 import Header from './components/Header';
 import TaskInbox from './components/TaskInbox';
 import EisenhowerMatrix from './components/EisenhowerMatrix';
 import AddTaskModal from './components/AddTaskModal';
 import PomodoroTimer from './components/PomodoroTimer';
 
-const getLocalDateString = (date: Date): string => {
+const getLocalDateString = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
 
-const App: React.FC = () => {
-  const [allTasks, setAllTasks] = useLocalStorage<Record<string, Task[]>>('vidgmarketing_daily_tasks', {});
-  const [selectedDate, setSelectedDate] = useState<string>(getLocalDateString(new Date()));
+const App = () => {
+  const [allTasks, setAllTasks] = useLocalStorage('vidgmarketing_daily_tasks', {});
+  const [selectedDate, setSelectedDate] = useState(getLocalDateString(new Date()));
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const tasksForSelectedDay = useMemo(() => allTasks[selectedDate] || [], [allTasks, selectedDate]);
 
-  const updateTasksForDate = (date: string, newTasks: Task[]) => {
+  const updateTasksForDate = (date, newTasks) => {
     setAllTasks(prev => ({ ...prev, [date]: newTasks }));
   };
 
   const inboxTasks = useMemo(() => tasksForSelectedDay.filter(t => t.isImportant === undefined), [tasksForSelectedDay]);
   const matrixTasks = useMemo(() => tasksForSelectedDay.filter(t => t.isImportant !== undefined), [tasksForSelectedDay]);
 
-  const handleDateChange = (offset: number) => {
+  const handleDateChange = (offset) => {
     const currentDate = new Date(selectedDate);
     currentDate.setDate(currentDate.getDate() + offset);
     setSelectedDate(getLocalDateString(currentDate));
@@ -38,8 +39,8 @@ const App: React.FC = () => {
     setSelectedDate(getLocalDateString(new Date()));
   };
 
-  const addTaskToInbox = (text: string) => {
-    const newTask: Task = {
+  const addTaskToInbox = (text) => {
+    const newTask = {
       id: crypto.randomUUID(),
       text,
       isCompleted: false,
@@ -48,8 +49,8 @@ const App: React.FC = () => {
     updateTasksForDate(selectedDate, [...tasksForSelectedDay, newTask]);
   };
 
-  const addMatrixTask = (text: string, isImportant: boolean, isUrgent: boolean) => {
-    const newTask: Task = {
+  const addMatrixTask = (text, isImportant, isUrgent) => {
+    const newTask = {
       id: crypto.randomUUID(),
       text,
       isCompleted: false,
@@ -60,29 +61,29 @@ const App: React.FC = () => {
     updateTasksForDate(selectedDate, [...tasksForSelectedDay, newTask]);
   };
   
-  const deleteTask = (id: string) => {
+  const deleteTask = (id) => {
     updateTasksForDate(selectedDate, tasksForSelectedDay.filter(task => task.id !== id));
   };
 
-  const toggleTask = (id: string) => {
+  const toggleTask = (id) => {
     updateTasksForDate(selectedDate, tasksForSelectedDay.map(task =>
       task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
     ));
   };
 
-  const updateTaskText = (id: string, newText: string) => {
+  const updateTaskText = (id, newText) => {
     updateTasksForDate(selectedDate, tasksForSelectedDay.map(task =>
       task.id === id ? { ...task, text: newText } : task
     ));
   };
 
-  const categorizeTask = (id: string, isImportant: boolean, isUrgent: boolean) => {
+  const categorizeTask = (id, isImportant, isUrgent) => {
     updateTasksForDate(selectedDate, tasksForSelectedDay.map(task =>
       task.id === id ? { ...task, isImportant, isUrgent } : task
     ));
   };
   
-  const updateTaskQuadrant = (id: string, quadrant: QuadrantType) => {
+  const updateTaskQuadrant = (id, quadrant) => {
     const newFlags = {
       [QuadrantType.DO]: { isImportant: true, isUrgent: true },
       [QuadrantType.SCHEDULE]: { isImportant: true, isUrgent: false },

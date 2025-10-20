@@ -1,21 +1,9 @@
 import React, { useState, useMemo } from 'react';
+// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import TaskItem from './TaskItem';
-import { Task, QuadrantType, SortOption } from '../types';
 import SortControls from './SortControls';
 
-interface QuadrantProps {
-  title: string;
-  subtitle: string;
-  quadrantType: QuadrantType;
-  tasks: Task[];
-  borderColor: string;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onUpdateQuadrant: (id: string, quadrant: QuadrantType) => void;
-  onUpdateTask: (id: string, newText: string) => void;
-}
-
-const Quadrant: React.FC<QuadrantProps> = ({
+const Quadrant = ({
   title,
   subtitle,
   tasks,
@@ -25,7 +13,7 @@ const Quadrant: React.FC<QuadrantProps> = ({
   onUpdateQuadrant,
   onUpdateTask,
 }) => {
-  const [sortOption, setSortOption] = useState<SortOption>('createdAt_desc');
+  const [sortOption, setSortOption] = useState('createdAt_desc');
 
   const sortedTasks = useMemo(() => {
     return [...tasks].sort((a, b) => {

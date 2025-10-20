@@ -1,16 +1,9 @@
 import React from 'react';
+// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
 import Quadrant from './Quadrant';
-import { Task, QuadrantType } from '../types';
+import { QuadrantType } from '../types';
 
-interface EisenhowerMatrixProps {
-  tasks: Task[];
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onUpdateQuadrant: (id: string, quadrant: QuadrantType) => void;
-  onUpdateTask: (id: string, newText: string) => void;
-}
-
-const EisenhowerMatrix: React.FC<EisenhowerMatrixProps> = ({ tasks, onToggle, onDelete, onUpdateQuadrant, onUpdateTask }) => {
+const EisenhowerMatrix = ({ tasks, onToggle, onDelete, onUpdateQuadrant, onUpdateTask }) => {
   const doTasks = tasks.filter(task => task.isImportant && task.isUrgent);
   const scheduleTasks = tasks.filter(task => task.isImportant && !task.isUrgent);
   const delegateTasks = tasks.filter(task => !task.isImportant && task.isUrgent);
@@ -21,7 +14,6 @@ const EisenhowerMatrix: React.FC<EisenhowerMatrixProps> = ({ tasks, onToggle, on
       <Quadrant
         title="فوری و مهم"
         subtitle="انجام بده"
-        quadrantType={QuadrantType.DO}
         tasks={doTasks}
         borderColor="border-red-500"
         onToggle={onToggle}
@@ -32,7 +24,6 @@ const EisenhowerMatrix: React.FC<EisenhowerMatrixProps> = ({ tasks, onToggle, on
       <Quadrant
         title="مهم اما غیرفوری"
         subtitle="برنامه‌ریزی کن"
-        quadrantType={QuadrantType.SCHEDULE}
         tasks={scheduleTasks}
         borderColor="border-blue-500"
         onToggle={onToggle}
@@ -43,7 +34,6 @@ const EisenhowerMatrix: React.FC<EisenhowerMatrixProps> = ({ tasks, onToggle, on
       <Quadrant
         title="فوری اما غیرمهم"
         subtitle="واگذار کن"
-        quadrantType={QuadrantType.DELEGATE}
         tasks={delegateTasks}
         borderColor="border-yellow-500"
         onToggle={onToggle}
@@ -54,7 +44,6 @@ const EisenhowerMatrix: React.FC<EisenhowerMatrixProps> = ({ tasks, onToggle, on
       <Quadrant
         title="نه فوری، نه مهم"
         subtitle="حذف کن"
-        quadrantType={QuadrantType.DELETE}
         tasks={deleteTasks}
         borderColor="border-gray-500"
         onToggle={onToggle}

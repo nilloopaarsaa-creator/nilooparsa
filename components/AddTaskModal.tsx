@@ -1,20 +1,13 @@
-
 import React, { useState } from 'react';
 
-interface AddTaskModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onAddTask: (text: string, isImportant: boolean, isUrgent: boolean) => void;
-}
-
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, onAddTask }) => {
+const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
   const [text, setText] = useState('');
   const [isImportant, setIsImportant] = useState(false);
   const [isUrgent, setIsUrgent] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
       onAddTask(text.trim(), isImportant, isUrgent);

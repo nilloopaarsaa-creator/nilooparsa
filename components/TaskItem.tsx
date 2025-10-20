@@ -1,20 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Task, QuadrantType } from '../types';
+// Fix: Removed .js extension from imports to allow proper TypeScript module resolution.
+import { QuadrantType } from '../types';
 import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, TrashIcon } from './icons';
 
-interface TaskItemProps {
-  task: Task;
-  borderColor: string;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onUpdateQuadrant: (id: string, quadrant: QuadrantType) => void;
-  onUpdateTask: (id: string, newText: string) => void;
-}
-
-const TaskItem: React.FC<TaskItemProps> = ({ task, borderColor, onToggle, onDelete, onUpdateQuadrant, onUpdateTask }) => {
+const TaskItem = ({ task, borderColor, onToggle, onDelete, onUpdateQuadrant, onUpdateTask }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.text);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (isEditing) {
@@ -29,7 +21,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, borderColor, onToggle, onDele
     setIsEditing(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSave();
     } else if (e.key === 'Escape') {

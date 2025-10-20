@@ -1,6 +1,6 @@
 import React from 'react';
 
-const toShamsi = (dateString: string): string => {
+const toShamsi = (dateString) => {
     try {
         const date = new Date(dateString);
          // Adjust for timezone offset to prevent date shifting
@@ -19,15 +19,7 @@ const toShamsi = (dateString: string): string => {
     }
 };
 
-
-interface HeaderProps {
-    selectedDate: string;
-    onDateChange: (offset: number) => void;
-    onGoToToday: () => void;
-    onAddTaskClick: () => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ selectedDate, onDateChange, onGoToToday, onAddTaskClick }) => {
+const Header = ({ selectedDate, onDateChange, onGoToToday, onAddTaskClick }) => {
   return (
     <header className="text-center border-b-2 border-slate-700 pb-4">
       <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
